@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>시작화면</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer">
+        </script>
+        <link href='https://fonts.googleapis.com/css?family=Quantico' rel='stylesheet' type='text/css'>
+        
+
+</head>
+
+<body>
+ <script>
+    window.onresize = function(event){
+        var innerWidth = window.innerWidth;
+        size.textContent = innerWidth;
+        }
+ </script>
+        <div class="center-inner">
+            <div class="bubbles">
+                <h1>Bubble PoP!!</h1>
+            </div>
+        </div>
+        
+        <img src="./image/gear.png" class="gearImg" width="100" height="100">
+        <form id='start'>
+            <input type='button' class="btn1" value='게임 시작!' />
+            <input type='button' class="btn2" value='게임 설명' />
+        </form>
+        <div class='volumec'>
+            <div class='volumecwrap'>
+                <h3> 배경음악 </h3>
+                <div class="container">                       
+                    <div class="slider">
+                    <input type = "range" class="bgvolume" min="0" max="100" oninput="set_vol(this.value)" onchange="set_vol(this.value)"/>
+                      <output id="rangevalue">50</output>   
+                      <div>
+                        <input type="button" class="musicstart" value ="bgmON!!" />
+                        </div>    
+                        </div>
+                    </div> 
+                    <h3>효과음</h3>                
+                    <div class="container2">                          
+                        <div class="slider2">
+                        <input type = "range" min="0" max="100" oninput="set_vol2(this.value)" onchange="set_vol2(this.value)"/>
+                          <output id="rangevalue2">50</output>
+                          <div>   
+                            <input type='button' class="btn4" value='닫기' />
+                             </div>
+                         
+                        </div>
+                                            
+                    </div>
+           
+            </div>
+        </div>
+   
+        <div class='popup'>
+            <div class='popupwrap'>
+              <div class="header"> 
+                게임 플레이 방법
+              <div class="pn">
+                <div>
+                  P1 조작
+                </div>
+                <div>
+                  P2 조작
+                </div>
+              </div>
+              <div class="pn2">
+                <div>
+                  <img src="./image/wasd.png" width="200" height="200"/>
+                </div>
+                <div>
+                    <img src="./image/방향키.jpg" width="200" height="200"/>
+                </div>
+              </div>
+              <div class="pn3">
+                <div>
+                  P1 물풍선
+                </div>
+                <div>
+                    P2 물풍선
+                </div>
+              </div>
+              <div class="pn4">
+                <div>
+                  <img src="./image/shift.png" width="150" height="120"/>
+                </div>
+                <div>
+                    <img src="./image/enter.png" width="150" height="150"/>
+                </div>
+              </div>
+              <div class="pn5">
+                <div>
+                  <input type="button" class="btn3" value="닫기">
+                </div>
+          
+              </div>
+    
+    
+    
+              </div>  
+    
+            </div>
+        </div>   
+   
+
+    <canvas id="myCanvas" width="300" height="300">
+  
+    </canvas>
+
+
+
+    <script>
+
+     
+        //캐릭터 그리기
+
+        var canvas = document.getElementById('myCanvas');
+        canvas.setAttribute("width", 1000);
+        canvas.setAttribute("height", 900);
+
+        var ctx = canvas.getContext("2d");
+
+
+
+        var c1 = true;
+        var c2 = false;
+
+
+        //처음 도형 그리기
+        ctx.strokeStyle = 'red';
+        ctx.lineWidth = 10;
+        ctx.strokeRect(130, 80, 200, 200);
+
+        ctx.fillStyle = 'red';
+        ctx.fillRect(10, 20, 100, 50);
+
+        ctx.font = '25px serif';
+        ctx.fillStyle = 'white';
+        ctx.fillText("Player1",20, 50);
+
+
+
+     
+
+        ctx.strokeStyle = 'green';
+        ctx.lineWidth = 10;
+        ctx.strokeRect(490, 70, 220, 220);
+
+        ctx.fillStyle = 'green';
+        ctx.fillRect(720, 70, 100, 50);
+
+        ctx.font = '25px serif';
+        ctx.fillStyle = 'white';
+        ctx.fillText("Player2",730, 100);
+
+
+        //캐릭터 선택
+        $(document).keydown(function (event) { //2p 왼쪽방향키
+            if (event.keyCode == '37') {
+                ctx.strokeStyle = 'green';
+                ctx.lineWidth = 10;
+                ctx.strokeRect(120, 70, 220, 220);
+        
+                ctx.fillStyle = 'green';
+                ctx.fillRect(10, 70, 100, 50);
+        
+                ctx.font = '25px serif';
+                ctx.fillStyle = 'white';
+                ctx.fillText("Player2",20, 100);
+                
+      
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 10;
+                ctx.strokeRect(490, 70, 220, 220);
+        
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(720, 70, 100, 50);
+        
+                ctx.font = '25px serif';
+                ctx.fillStyle = '#fff';
+                ctx.fillText("Player2",730, 100);
+        
+                audioplay();
+                c2 = true;
+                console.log(c2);
+            }
+            else if (event.keyCode == '39') {//2p 오른쪽방향키
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 10;
+                ctx.strokeRect(120, 70, 220, 220);
+        
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(10, 70, 100, 50);
+        
+                ctx.font = '25px serif';
+                ctx.fillStyle = '#fff';
+                ctx.fillText("Player2",20, 100);
+                
+      
+
+                ctx.strokeStyle = 'green';
+                ctx.lineWidth = 10;
+                ctx.strokeRect(490, 70, 220, 220);
+        
+                ctx.fillStyle = 'green';
+                ctx.fillRect(720, 70, 100, 50);
+        
+                ctx.font = '25px serif';
+                ctx.fillStyle = 'white';
+                ctx.fillText("Player2",730, 100);
+         
+
+                audioplay();
+
+                c2 = false;
+                console.log(c2);
+            }
+            else if (event.keyCode == '65') { //1p 왼쪽A키
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = 10;
+                ctx.strokeRect(130, 80, 200, 200);
+        
+                ctx.fillStyle = 'red';
+                ctx.fillRect(10, 20, 100, 50);
+        
+                ctx.font = '25px serif';
+                ctx.fillStyle = 'white';
+                ctx.fillText("Player1",20, 50);
+
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 10;
+                ctx.strokeRect(500, 80, 200, 200);
+        
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(720, 20, 100, 50);
+        
+                ctx.font = '25px serif';
+                ctx.fillStyle = '#fff';
+                ctx.fillText("Player1",730, 50);
+
+                audioplay();
+                c1 = true;
+                console.log(c1);
+            }
+            else if (event.keyCode == '68') {//1p 오른쪽D키
+                ctx.strokeStyle = '#fff';
+                ctx.lineWidth = 10;
+                ctx.strokeRect(130, 80, 200, 200);
+        
+                ctx.fillStyle = '#fff';
+                ctx.fillRect(10, 20, 100, 50);
+        
+                ctx.font = '25px serif';
+                ctx.fillStyle = '#fff';
+                ctx.fillText("Player1",20, 50);
+
+                ctx.strokeStyle = 'red';
+                ctx.lineWidth = 10;
+                ctx.strokeRect(500, 80, 200, 200);
+        
+                ctx.fillStyle = 'red';
+                ctx.fillRect(720, 20, 100, 50);
+        
+                ctx.font = '25px serif';
+                ctx.fillStyle = 'white';
+                ctx.fillText("Player1",730, 50);
+
+                audioplay();
+                c1 = false;
+                console.log(c1);
+            }
+        });
+
+
+
+
+
+        //제목 이펙트
+        jQuery(document).ready(function ($) {
+            // Define a blank array for the effect positions. This will be populated based on width of the title.
+            var bArray = [];
+            // Define a size array, this will be used to vary bubble sizes
+            var sArray = [4, 6, 8, 10];
+
+            // Push the header width values to bArray
+            for (var i = 0; i < $('.bubbles').width(); i++) {
+                bArray.push(i);
+            }
+            // Function to select random array element
+            // Used within the setInterval a few times
+            function randomValue(arr) {
+                return arr[Math.floor(Math.random() * arr.length)];
+            }
+
+            // setInterval function used to create new bubble every 350 milliseconds
+            setInterval(function () {
+
+                // Get a random size, defined as variable so it can be used for both width and height
+                var size = randomValue(sArray);
+                // New bubble appeneded to div with it's size and left position being set inline
+                // Left value is set through getting a random value from bArray
+                $('.bubbles').append('<div class="individual-bubble" style="left: ' + randomValue(bArray) + 'px; width: ' + size + 'px; height:' + size + 'px;"></div>');
+
+                // Animate each bubble to the top (bottom 100%) and reduce opacity as it moves
+                // Callback function used to remove finsihed animations from the page
+                $('.individual-bubble').animate({
+                    'bottom': '100%',
+                    'opacity': '-=0.7'
+                }, 3000, function () {
+                    $(this).remove()
+                }
+                );
+
+
+            }, 350);
+
+        });
+
+        //버튼이동시 소리
+        var audio = new Audio('./sounds/confirm_style_2_001.mp3');
+        var audio2 = new Audio('./sounds/MP_Button.mp3');
+        var audio3 = new Audio('./sounds/summer.mp3');
+        audio3.autoplay = true;
+        audio3.volume =0.1;
+        function audioplay() {
+            audio.pause();
+            audio.currentTime = 0;
+            audio.play();
+        }
+
+        function audioplay2() {
+            audio2.pause();
+            audio2.currentTime = 0;
+            audio2.play();
+        }
+        function audioplay3() {
+            audio3.pause();
+            audio3.currentTime = 0;
+            audio3.play(-1);
+        }
+
+        //캐릭터그리기
+
+        temp("./image/user1/r.png", 130, 80);
+        temp("./image/user2/l.png", 500, 80,);
+        function temp(data, x, y) {
+
+            const imageTemplete = new Image(); // 가져온 그림을 담을 이미지
+
+            imageTemplete.src = data;
+
+            imageTemplete.onload = function () {
+
+                ctx.drawImage(imageTemplete, x, y, 200, 200);
+            }
+        }
+
+        //팝업 
+        $(document).ready(function () {
+            //페이지 이동
+            $(".btn1").click(function () {
+                audioplay2();
+                if(c1==true && c2 == true)
+                {
+                    $(location).attr("href", "./game.html?c1=true&c2=true");
+                } 
+                else if(c1==true && c2 == false)
+                {
+                   $(location).attr("href", "./game.html?c1=true&c2=false");
+                }
+                else if(c1==false && c2 == true)
+                {
+                $(location).attr("href", "./game.html?c1=false&c2=true");
+                 }
+                if(c1==false && c2 == false)
+                {
+                $(location).attr("href", "./game.html?c1=false&c2=false");
+               }
+            })
+
+            //팝업 열기
+            $('.btn2').click(function () {
+                audioplay2();
+                $('.popup').fadeIn(0);
+            })
+            //팝업닫기
+            $('.btn3').click(function () {
+                audioplay2();
+                $('.popup').fadeOut(0);
+            })
+            $('.gearImg').click(function () {
+                audioplay2();
+                $('.volumec').fadeIn(0);
+            })
+            $('.btn4').click(function () {
+                audioplay2();
+                $('.volumec').fadeOut(0);
+            })
+            $('.musicstart').click(function () {
+             
+               if(audio3.paused == true )
+               {
+                audioplay3();
+                audio3.paused = false;
+           
+               }
+               else if (audio3.paused==false){
+                audio3.pause();
+                audio3.paused = true;
+             
+               }
+               if( $(this).val() == 'bgmON!!' ) {
+                $(this).val('bgmOFF!!');
+              }
+              else {
+                $(this).val('bgmON!!');
+              }
+            })
+
+        })
+
+        function set_vol(val) {          
+            audio3.volume = val / 100;
+            rangevalue.value=val;
+        }
+
+        function set_vol2(val) {          
+            audio2.volume = val / 100;
+            audio.volume = val / 100;
+            rangevalue2.value=val;
+            audioplay();
+        }
+        
+
+//아이템 설명 ui만 만들면 됨
+    </script>
+</body>
+
+</html>
+
